@@ -9,30 +9,42 @@
  */
 (function()
 {
-	var implementF = function(newClass, object) {
-		if(object === undefined) return;
+	var implementF = function(newClass, object)
+	{
+		if (object === undefined) return;
 		for (var key in object) {
-			if (object.hasOwnProperty(key)) {
-				newClass[key] = newClass.prototype[key] = object[key];
+			if (key != "Extends" && object.hasOwnProperty(key)) {
+
+				var func = object[key],
+					wrap = func,
+					fParent = newClass[key];
+
+				if ($.type(func) == "function" && newClass[key] != undefined && newClass.prototype.$definition[key]) {
+					wrap = function()
+					{
+						this.$parent = fParent;
+						return func.apply(this, arguments);
+					}
+				}
+
+				newClass[key] = newClass.prototype[key] = wrap;
 			}
 		}
 	};
 
-	var inheritF = function(newClass, inherit) {
+	var inheritF = function(newClass, inherit)
+	{
 
 		if ($.type(inherit) !== 'array') {
 			inherit = [inherit];
 		}
 
-		$.each(inherit, function(index, value) {
-			if(value.prototype.$definition.Extends) {
+		$.each(inherit, function(index, value)
+		{
+			if (value.prototype.$definition.Extends) {
 				inheritF(newClass, value.prototype.$definition.Extends);
 			}
-			for (var key in value) {
-				if (value.hasOwnProperty(key)) {
-					newClass[key] = newClass.prototype[key] = value[key];
-				}
-			}
+			implementF(newClass, value);
 		});
 	};
 
@@ -42,34 +54,23 @@
 
 		var newClass = function()
 		{
-			this.extend(params);
 			return (this.initialize) ? this.initialize.apply(this, arguments) : this;
 		};
 
 		newClass.prototype.$definition = $.extend(true, {}, params);
 		newClass.prototype.options = {};
 
+		// add some default class functions
 		implementF(newClass, {
-			implement: function(object)
+			parent: function()
 			{
-				if (object === undefined) return;
-				for (var key in object) {
-					if (object.hasOwnProperty(key)) {
-						this.prototype[key] = object[key];
-					}
+				if (this.$parent && $.type(this.$parent) == "function") {
+					return this.$parent.apply(this, arguments);
 				}
+				throw new Exception("Can't call parent function");
 			},
-			extend: function(object)
+			setOption: function(key, value)
 			{
-				if (object === undefined) return;
-				for (var key in object) {
-					if (object.hasOwnProperty(key)) {
-						this[key] = object[key];
-					}
-				}
-				return this;
-			},
-			setOption: function(key, value) {
 				this.options[key] = value;
 				return this;
 			},
@@ -85,11 +86,15 @@
 			}
 		});
 
+		// class extends another class, inherit functionality
 		if (params.Extends) {
 			inheritF(newClass, params.Extends);
 		}
 
-		return newClass.extend(params);
+		// apply params to class functionality
+		implementF(newClass, params);
+
+		return newClass;
 	};
 
 }());

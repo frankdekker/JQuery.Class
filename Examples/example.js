@@ -12,10 +12,12 @@ var Example = new Class({
 
 var Animal = new Class({
 
+
 	weight: 0,
 
 	initialize: function(options) {
 		this.setOptions(options);
+		console.log(this);
 		this.weight = this.options.weight;
 	},
 
