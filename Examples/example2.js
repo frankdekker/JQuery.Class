@@ -51,12 +51,12 @@ var Persian = new Class({
 
 
 
-//var cat1 = new Animal();
-//var cat2 = new Cat();
+var cat1 = new Animal();
+var cat2 = new Cat();
 var cat3 = new Persian().setName("Miauw");
 
 
-//console.log(cat1.getSpecies());
-//console.log(cat2.getSpecies());
-//console.log(cat3.getSpecies());
+console.log(cat1.getSpecies());
+console.log(cat2.getSpecies());
+console.log(cat3.getSpecies());
 console.log(cat3.toDescription());

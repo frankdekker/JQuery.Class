@@ -19,14 +19,18 @@
 					wrap = func,
 					fParent = newClass[key];
 
-				if ($.type(func) == "function" && newClass[key] != undefined && newClass.prototype.$definition[key]) {
-
-					console.log("wrapping: " + key);
+				// wrap function for parent call
+				if ($.type(func) == "function"
+					&& newClass[key] != undefined
+					&& newClass.prototype.$definition[key]
+				    && func.$wrapped != true
+				) {
 					wrap = function()
 					{
 						this.$parent = fParent;
 						return func.apply(this, arguments);
 					}
+					wrap.$wrapped = true;
 				}
 
 				newClass[key] = newClass.prototype[key] = wrap;
@@ -36,7 +40,6 @@
 
 	var inheritF = function(newClass, inherit)
 	{
-
 		if ($.type(inherit) !== 'array') {
 			inherit = [inherit];
 		}
