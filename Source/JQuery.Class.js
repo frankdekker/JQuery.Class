@@ -20,6 +20,8 @@
 					fParent = newClass[key];
 
 				if ($.type(func) == "function" && newClass[key] != undefined && newClass.prototype.$definition[key]) {
+
+					console.log("wrapping: " + key);
 					wrap = function()
 					{
 						this.$parent = fParent;
