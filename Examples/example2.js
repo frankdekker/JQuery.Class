@@ -48,9 +48,6 @@ var Persian = new Class({
 	}
 });
 
-
-
-
 var cat1 = new Animal();
 var cat2 = new Cat();
 var cat3 = new Persian().setName("Miauw");
