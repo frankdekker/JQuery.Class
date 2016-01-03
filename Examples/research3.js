@@ -1,23 +1,38 @@
-/*
----
 
-name: Class
+Function.prototype.overloadSetter = function(){
+	var self = this;
+	return function(a, b){
+		if (a == null) return this;
+		if (typeof a != 'string'){
+			for (var k in a) self.call(this, k, a[k]);
+			/*<ltIE8>*/
+			forEachObjectEnumberableKey(a, self, this);
+			/*</ltIE8>*/
+		} else {
+			self.call(this, a, b);
+		}
+		return this;
+	};
+};
 
-description: Contains the Class Function for easily creating, extending, and implementing reusable Classes.
+Function.prototype.overloadGetter = function(){
+	var self = this;
+	return function(a){
+		var args, result;
+		if (typeof a != 'string') args = a;
+		else if (arguments.length > 1) args = arguments;
+		if (args){
+			result = {};
+			for (var i = 0; i < args.length; i++) result[args[i]] = self.call(this, args[i]);
+		} else {
+			result = self.call(this, a);
+		}
+		return result;
+	};
+};
 
-license: MIT-style license.
 
-requires: [Array, String, Function, Number]
-
-provides: Class
-
-...
-*/
-
-(function(){
-
-var Class = this.Class = new Type('Class', function(params){
-	if (instanceOf(params, Function)) params = {initialize: params};
+var Class = function(params){
 
 	var newClass = function(){
 		reset(this);
@@ -27,14 +42,39 @@ var Class = this.Class = new Type('Class', function(params){
 		var value = (this.initialize) ? this.initialize.apply(this, arguments) : this;
 		this.$caller = this.caller = null;
 		return value;
-	}.extend(this).implement(params);
+	}.implement(params);
 
 	newClass.$constructor = Class;
 	newClass.prototype.$constructor = newClass;
 	newClass.prototype.parent = parent;
 
 	return newClass;
-});
+};
+
+var implementClass = function(name, method){
+	if (method && method.$hidden) return;
+
+	var hooks = hooksOf(this);
+
+	for (var i = 0; i < hooks.length; i++){
+		var hook = hooks[i];
+		if (typeOf(hook) == 'type') implementClass.call(hook, name, method);
+		else hook.call(this, name, method);
+	}
+
+	var previous = this.prototype[name];
+	if (previous == null || !previous.$protected) this.prototype[name] = method;
+
+	if (this[name] == null && typeOf(method) == 'function') extendClass.call(this, name, function(item){
+		return method.apply(item, slice.call(arguments, 1));
+	});
+};
+
+var extendClass = function(name, method){
+	if (method && method.$hidden) return;
+	var previous = this[name];
+	if (previous == null || !previous.$protected) this[name] = method;
+};
 
 var parent = function(){
 	if (!this.$caller) throw new Error('The method "parent" cannot be called.');
@@ -112,5 +152,3 @@ Class.Mutators = {
 		}, this);
 	}
 };
-
-})();
