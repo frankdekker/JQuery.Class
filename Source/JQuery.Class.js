@@ -17,8 +17,8 @@
 			return (this.initialize) ? this.initialize.apply(this, arguments) : this;
 		};
 
-		// apply params to class functionality
-		implementF(newClass, params);
+		// apply
+		$.extend(newClass.prototype, params);
 
 		return newClass;
 	};
@@ -28,7 +28,7 @@
 			var value = object[key];
 			switch ($.type(value)) {
 				case 'object': object[key] = $.extend(true, {}, value); break;
-				case 'array':  object[key] = $.merge([], value); break;
+				case 'array':  object[key] = $.extend(true, [], value); break;
 			}
 		}
 		return object;
