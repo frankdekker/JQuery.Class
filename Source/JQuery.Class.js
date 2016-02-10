@@ -6,8 +6,7 @@
  */
 (function()
 {
-
-	var Class = this.Class = function(params)
+	this.Class = function(params)
 	{
 		params = params || {};
 
