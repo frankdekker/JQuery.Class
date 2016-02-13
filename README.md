@@ -1,8 +1,7 @@
 # JQuery.Class
 Class function based on Mootools functionality
 
-`
-var Cat = new Class({
+```var Cat = new Class({
 
 	name: null,
 	weight: 0,
@@ -24,5 +23,5 @@ var Cat = new Class({
 
 
 var cat1 = new Cat(10, 'red');
-var cat2 = new Cat(5, 'black');
-`
+var cat2 = new Cat(5, 'black');```
+
