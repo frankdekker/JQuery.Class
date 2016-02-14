@@ -1,26 +1,37 @@
 # JQuery.Class
 Class function based on Mootools functionality
 
+# Example
 	var Cat = new Class({
+		Extends: [Options, Events]
 	
-		name: null,
-		weight: 0,
-		color: null,
+		options: {
+			name: 'None',
+			weight: 5,
+			legs: 4
+			/* onMiauw: function() {} */
+		}
 	
-		initialize: function(weight, color) {
-			this.weight = weight;
-			this.color = color;
+		initialize: function(options) {
+			this.setOptions(options);
+			this.trigger('miauw');
 		},
 	
 		getWeight: function() {
-			return this.weight;
+			return this.options.weight;
 		},
 	
 		getColor: function() {
-			return this.color;
+			return this.options.color;
 		}
 	});
 	
-	var cat1 = new Cat(10, 'red');
-	var cat2 = new Cat(5, 'black');
+	var cat = new Cat({
+		name: 'Garfield',
+		weight: 20,
+		legs: 4,
+		onMiauw: function() {
+			console.log('Miauw...');
+		}
+	});
 
