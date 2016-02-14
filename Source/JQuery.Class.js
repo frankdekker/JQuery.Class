@@ -18,7 +18,7 @@
 		};
 
 		// store class definition
-		newClass.$definition = $.extend(true, {}, classDefinition);
+		newClass.$definition = classDefinition;
 
 		// apply params to class
 		extend(newClass, classDefinition);
