@@ -14,7 +14,9 @@ Class function based on Mootools functionality
 	
 		initialize: function(options) {
 			this.setOptions(options);
-			this.trigger('miauw');
+			this.on('miauw', function() {
+				console.log('Miauw...');
+			});
 		},
 	
 		getWeight: function() {
@@ -29,9 +31,7 @@ Class function based on Mootools functionality
 	var cat = new Cat({
 		name: 'Garfield',
 		weight: 20,
-		legs: 4,
-		onMiauw: function() {
-			console.log('Miauw...');
-		}
+		legs: 4
 	});
+	cat.trigger('miauw');
 
