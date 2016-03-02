@@ -1,8 +1,8 @@
 /**
  * A way to mimic Class functionality in javascript based on mootools
  */
-(function()
-{
+(function() {
+
 	this.Class = function(classDefinition)
 	{
 		classDefinition = classDefinition || {};
@@ -21,7 +21,7 @@
 		newClass.$definition = classDefinition;
 
 		// apply params to class
-		extend(newClass, classDefinition);
+		extend(newClass.prototype, classDefinition);
 
 		return newClass;
 	};
@@ -37,16 +37,36 @@
 		return object;
 	};
 
-	var extend = function(klass, object) {
+	var extend = function(target, object) {
+		var key, value;
 
-		if (object.Extends) {
-			$.each($.type(object.Extends) == 'array' ? object.Extends : [object.Extends], function() {
-				extend(klass, this.$definition);
-			});
-			delete object.Extends;
+		for (key in object) {
+
+			if (object.hasOwnProperty(key) === false || object[key] === undefined ) {
+				continue;
+			}
+
+			if (key === 'Extends') {
+				// class overloading
+				$.each($.type(object.Extends) === 'array' ? object.Extends : [object.Extends], function() {
+					extend(target, this.$definition);
+				});
+
+			} else if ($.type(target[key]) === 'function' && $.type(object[key]) === 'function') {
+				// function overloading
+				target[key] = overload(object[key], target[key]);
+			} else {
+				// regular assigning
+				target[key] = object[key];
+			}
 		}
+	};
 
-		$.extend(klass.prototype, object);
-	}
+	var overload = function(overloadFunction, parentFunction) {
+		return function() {
+			this.parent = parentFunction;
+			overloadFunction.apply(this, arguments);
+		};
+	};
 
 }());

@@ -9,6 +9,35 @@
 </head>
 
 <body>
-    <script></script>
+    <script>
+        var count = 0;
+
+        var SecondParentClass = new Class({
+            test: function() {
+                console.log('secondParentClass');
+            }
+        });
+
+        var FirstParentClass = new Class({
+            Extends: SecondParentClass,
+
+            test: function() {
+                console.log('firstParentClass');
+                this.parent();
+            }
+        });
+
+        var OverloadClass = new Class({
+            Extends: FirstParentClass,
+
+            test: function() {
+                console.log('overloadClass');
+                this.parent();
+            }
+        }, true);
+
+        new OverloadClass().test();
+
+    </script>
 </body>
 </html>
