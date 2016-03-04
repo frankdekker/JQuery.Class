@@ -60,7 +60,7 @@
 					extend(target, this.$definition);
 				});
 
-			} else if ($.type(target[key]) === 'function' && $.type(object[key]) === 'function') {
+			} else if ($.type(target[key]) === 'function' && $.isFunction(object[key])) {
 				// function overloading
 				target[key] = overload(object[key], target[key]);
 			} else {
