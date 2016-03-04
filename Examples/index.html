@@ -15,34 +15,38 @@
         var SecondParentClass = new Class({
             test: function() {
                 console.log('secondParentClass');
-                if (arguments.callee == this.parent) {
-                    console.log('wat2');
-                }
+                this.debug = true;
+                this.parentMethod();
             }
         });
 
         var FirstParentClass = new Class({
-            Extends: SecondParentClass,
 
-            test: function() {
-                console.log('firstParentClass');
-                if (arguments.callee == this.parent) {
-                    console.log('wat1');
-                }
-                this.parent();
+            test1: function() {
+                console.log('FirstParentClass.test1');
+            },
+
+            test2: function() {
+                console.log('FirstParentClass.test2');
             }
         });
 
         var OverloadClass = new Class({
             Extends: FirstParentClass,
 
-            test: function() {
-                console.log('overloadClass');
-                this.parent();
+            test1: function() {
+                console.log('OverloadClass.test1');
+                this.test2();
+                this.parentMethod();
+            },
+
+            test2: function() {
+                console.log('OverloadClass.test2');
+                this.parentMethod();
             }
         }, true);
 
-        new OverloadClass().test();
+        new OverloadClass().test1();
 
     </script>
 </body>

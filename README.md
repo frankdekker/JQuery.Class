@@ -25,7 +25,7 @@ Inheritance
 		Extends: Animal,
 		color: null,
 		initialize: function(name, age, color) {
-			this.parent(name, age);
+			this.parentMethod(name, age);
 			this.color = color;
 		}
 	});
@@ -42,7 +42,7 @@ Options
 			this.setOptions(options);
 		}
 	});
-	
+
 	var person = new Human({
 		length: 175,
 		weight: 70

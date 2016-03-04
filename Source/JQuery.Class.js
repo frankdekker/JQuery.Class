@@ -23,6 +23,14 @@
 		// apply params to class
 		extend(newClass.prototype, classDefinition);
 
+		// parent function
+		newClass.prototype.parentMethod = function() {
+			if (arguments.callee.caller === this.$parent) {
+				throw 'This function has no parent.';
+			}
+			this.$parent.apply(this, arguments);
+		};
+
 		return newClass;
 	};
 
@@ -64,8 +72,10 @@
 
 	var overload = function(overloadFunction, parentFunction) {
 		return function() {
-			this.parentMethod = parentFunction;
+			var oldParent = this.$parent;
+			this.$parent = parentFunction;
 			overloadFunction.apply(this, arguments);
+			this.$parent = oldParent;
 		};
 	};
 
