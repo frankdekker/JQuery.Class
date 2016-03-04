@@ -15,6 +15,9 @@
         var SecondParentClass = new Class({
             test: function() {
                 console.log('secondParentClass');
+                if (arguments.callee == this.parent) {
+                    console.log('wat2');
+                }
             }
         });
 
@@ -23,6 +26,9 @@
 
             test: function() {
                 console.log('firstParentClass');
+                if (arguments.callee == this.parent) {
+                    console.log('wat1');
+                }
                 this.parent();
             }
         });

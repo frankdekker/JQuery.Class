@@ -1,7 +1,7 @@
 /**
  * Test case to verify the objects and arrays dont share variables between class instances
  */
-var TestCase = new Class({
+var TestCaseVariable = new Class({
 
 	name: 'UNITTEST',
 
@@ -60,13 +60,10 @@ var TestCase = new Class({
 });
 
 
-
-
-
 QUnit.test("Variables", function(assert)
 {
-	var tc1 = new TestCase();
-	var tc2 = new TestCase();
+	var tc1 = new TestCaseVariable();
+	var tc2 = new TestCaseVariable();
 
 	// test string class variable
 	tc2.setName('UNITTEST 2');

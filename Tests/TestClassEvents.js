@@ -1,7 +1,7 @@
 /**
  * Test case to verify the objects and arrays dont share variables between class instances
  */
-var TestCase = new Class({
+var TestCaseEvents = new Class({
 	Extends: [Options, Events],
 
 	testOne: null,
@@ -21,9 +21,9 @@ var TestCase = new Class({
 
 
 
-QUnit.test("Options", function(assert)
+QUnit.test("Events", function(assert)
 {
-	var test = new TestCase({
+	var test = new TestCaseEvents({
 		onTestOne: function(arg) {
 			this.testOne = arg;
 		}

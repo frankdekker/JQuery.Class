@@ -1,37 +1,66 @@
 # JQuery.Class
 Class function based on Mootools functionality
 
+# Requires
+JQuery
+
 # Example
-	var Cat = new Class({
-		Extends: [Options, Events]
-	
-		options: {
-			name: 'None',
-			weight: 5,
-			legs: 4
-			/* onMiauw: function() {} */
+Simple class
+
+	var Animal = new Class({
+		name: null,
+		age: null,
+		initialize: function(name, age) {
+			this.name = name;
+			this.age = age;
+		},
+		introduce: function() {
+			 alert("My name is " + this.name + ", " + this.age + " years.old");
 		}
-	
+	});
+
+Inheritance
+
+	var Cat = new Class({
+		Extends: Animal,
+		color: null,
+		initialize: function(name, age, color) {
+			this.parent(name, age);
+			this.color = color;
+		}
+	});
+
+Options
+
+	var Human = new Class({
+		options: {
+			length: 200,
+			weight: 80,
+			hair: 'long'
+		},
 		initialize: function(options) {
 			this.setOptions(options);
-			this.on('miauw', function() {
-				console.log('Miauw...');
-			});
-		},
-	
-		getWeight: function() {
-			return this.options.weight;
-		},
-	
-		getColor: function() {
-			return this.options.color;
 		}
 	});
 	
-	var cat = new Cat({
-		name: 'Garfield',
-		weight: 20,
-		legs: 4
+	var person = new Human({
+		length: 175,
+		weight: 70
 	});
-	cat.trigger('miauw');
+
+Events
+
+	var Human = new Class({
+		weapon: null,
+		initialize: function(weapon) {
+			this.weapon = weapon;
+			this.on('attacked', this.defend.bind(this));
+		},
+		defend: function() {
+			alert("Use " + this.weapon);
+		}
+	});
+
+	var person = new Human();
+	person.trigger('attacked');
 

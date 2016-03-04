@@ -64,7 +64,7 @@
 
 	var overload = function(overloadFunction, parentFunction) {
 		return function() {
-			this.parent = parentFunction;
+			this.parentMethod = parentFunction;
 			overloadFunction.apply(this, arguments);
 		};
 	};
