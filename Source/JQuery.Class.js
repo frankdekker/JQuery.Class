@@ -28,7 +28,7 @@
 			if (arguments.callee.caller === this.$parent) {
 				throw 'This function has no parent.';
 			}
-			this.$parent.apply(this, arguments);
+			return this.$parent.apply(this, arguments);
 		};
 
 		return newClass;
@@ -74,8 +74,9 @@
 		return function() {
 			var oldParent = this.$parent;
 			this.$parent = parentFunction;
-			overloadFunction.apply(this, arguments);
+			var result = overloadFunction.apply(this, arguments);
 			this.$parent = oldParent;
+			return result;
 		};
 	};
 
