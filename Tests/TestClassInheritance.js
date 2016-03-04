@@ -10,6 +10,11 @@ var TestClassInheritance1 = new Class({
 	test2: function()
 	{
 		TestClassInheritanceResult.push(3);
+	},
+	
+	test3: function()
+	{
+		return 'unittest';
 	}
 
 });
@@ -28,6 +33,10 @@ var TestClassInheritance2 = new Class({
 	{
 		TestClassInheritanceResult.push(2);
 		this.parentMethod();
+	},
+	
+	test3: function() {
+		return this.parentMethod();
 	}
 });
 
@@ -40,6 +49,11 @@ var TestClassInheritance3 = new Class({
 		this.parentMethod();
 		this.test2();
 		this.parentMethod();
+	},
+	
+	test3: function() 
+	{
+		return this.parentMethod();	
 	}
 
 });
@@ -48,12 +62,16 @@ var TestClassInheritance3 = new Class({
 QUnit.test("Inheritance", function(assert)
 {
 	// single inheritance
-	new TestClassInheritance2().test1();
+	var testClassInheritance = new TestClassInheritance2();
+	testClassInheritance.test1();
 	assert.deepEqual([1, 2, 3, 4], TestClassInheritanceResult);
+	assert.equals('unittest', testClassInheritance.test3());
 
 	// double inheritance
 	TestClassInheritanceResult = [];
-	new TestClassInheritance3().test1();
+	testClassInheritance = new TestClassInheritance3();
+	testClassInheritance.test1();
+	
 	assert.deepEqual([0, 1, 2, 3, 4, 2, 3, 1, 2, 3, 4], TestClassInheritanceResult);
-
+	assert.equals('unittest', testClassInheritance.test3());
 });
