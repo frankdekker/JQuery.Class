@@ -25,9 +25,15 @@
 
 		// parent function
 		newClass.prototype.parentMethod = function() {
-			if (arguments.callee.caller === this.$parent) {
-				throw 'This function has no parent.';
-			}
+			try {
+				if (arguments.callee.caller === this.$parent) {
+					if (window.console) {
+						console.error('This function has no parent.');
+					}
+					return false;
+				}
+			}catch(O_o) {}
+
 			return this.$parent.apply(this, arguments);
 		};
 
