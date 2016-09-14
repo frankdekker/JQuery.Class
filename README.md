@@ -64,3 +64,21 @@ Events
 	var person = new Human();
 	person.trigger('attacked');
 
+Chain
+
+    var Ajax = new Class({
+        Extends: [Chain],
+        
+        post: function() {
+            // do asynchronous callback
+            $.post('', {}, function() {
+                this.callChain('done');
+            }.bind(this));            
+        }    
+    });
+    
+    var ajax = new Ajax();
+    ajax.post().chain(function(response) {
+        console.log(response); // output is "done"
+    });    
+    

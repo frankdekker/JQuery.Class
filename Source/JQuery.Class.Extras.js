@@ -12,6 +12,61 @@
 	};
 
 	/**
+	 * Class to handle asynchronous callbacks
+	 *
+	 * @class Chain
+	 */
+	this.Chain = new Class({
+
+		$chains: [],
+
+		/**
+		 * Add functions to the call chain
+		 *
+		 * @param {Function} fn the function to call
+		 * @returns {*}
+		 * @public
+		 */
+		chain: function(fn) {
+			this.$chains.push(fn);
+
+			return this;
+		},
+
+		/**
+		 * call the oldest function on the chain
+		 *
+		 * @param {...*} args one or more arguments
+		 * @returns {*}
+		 * @public
+		 */
+		callChain: function(args) {
+			if (this.$chains.length == 0) {
+				return this;
+			}
+
+			var fn = this.$chains.shift();
+			if (typeof fn == 'function') {
+				fn.apply(arguments);
+			}
+
+			return this;
+		},
+
+		/**
+		 * Clear all functions from the chain
+		 *
+		 * @returns {*}
+		 * @public
+		 */
+		clearChain: function() {
+			this.$chains = [];
+
+			return this;
+		}
+	});
+
+	/**
 	 * Class to send and receive events
 	 *
 	 * @class Events
