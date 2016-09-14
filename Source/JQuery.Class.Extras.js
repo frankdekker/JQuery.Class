@@ -47,7 +47,7 @@
 
 			var fn = this.$chains.shift();
 			if (typeof fn == 'function') {
-				fn.apply(arguments);
+				fn.apply(this, arguments);
 			}
 
 			return this;
