@@ -33,6 +33,7 @@ Inheritance
 Options
 
 	var Human = new Class({
+	    Extends: Options,
 		options: {
 			length: 200,
 			weight: 80,
@@ -51,11 +52,14 @@ Options
 Events
 
 	var Human = new Class({
+	    Extends: Events,	    
 		weapon: null,
+				
 		initialize: function(weapon) {
 			this.weapon = weapon;
 			this.on('attacked', this.defend.bind(this));
 		},
+		
 		defend: function() {
 			alert("Use " + this.weapon);
 		}
@@ -67,7 +71,7 @@ Events
 Chain
 
     var Ajax = new Class({
-        Extends: [Chain],
+        Extends: Chain,
         
         post: function() {
             // do asynchronous callback
