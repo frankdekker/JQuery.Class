@@ -2,7 +2,7 @@
 Class function based on Mootools functionality
 
 # Requires
-JQuery
+JQuery (test)
 
 # Example
 Simple class
