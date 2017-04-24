@@ -20,11 +20,11 @@
             snap: 10,
             preventDefault: false,
             stopPropagation: false
-            // onBeforeStart: function(element, point) {},
-            // onStart:       function(event) {},
-            // onDrag:        function(event) {},
-            // onCancel:      function(event) {},
-            // onComplete:    function(event) {},
+            // onBeforeStart: function(element, point, event) {},
+            // onStart:       function(element, point, event) {},
+            // onDrag:        function(element, point, start, event) {},
+            // onCancel:      function(element, point, start, event) {},
+            // onComplete:    function(element, poinst, start, event) {},
         },
 
         /**
@@ -105,7 +105,7 @@
             var point = this.getPoint(event);
             this.mouse.start = point;
 
-            this.trigger('beforeStart', [this.element, point]);
+            this.trigger('beforeStart', [this.element, point, event]);
 
             $(document)
                 .on('mousemove touchmove', this.bound.check)
@@ -133,7 +133,7 @@
                 .on('mousemove touchmove', this.bound.drag)
                 .on('mouseup touchend touchcancel', this.bound.stop);
 
-            this.trigger('start', [this.element, point]);
+            this.trigger('start', [this.element, point, event]);
         },
 
         /**
@@ -143,7 +143,7 @@
         drag: function (event) {
             'use strict';
 
-            this.trigger('drag', [this.element, this.getPoint(event), this.mouse.start]);
+            this.trigger('drag', [this.element, this.getPoint(event), this.mouse.start, event]);
         },
 
         /**
@@ -157,7 +157,7 @@
                 .off('mousemove touchmove', this.bound.check)
                 .off('mouseup touchend touchcancel', this.bound.cancel);
 
-            this.trigger('cancel', [this.element, this.getPoint(event)]);
+            this.trigger('cancel', [this.element, this.getPoint(event), this.mouse.start, event]);
         },
 
         /**
@@ -172,7 +172,7 @@
                 .off('mousemove touchmove', this.bound.drag)
                 .off('mouseup touchend touchcancel', this.bound.stop);
 
-            this.trigger('complete', [this.element, this.getPoint(event), this.mouse.start]);
+            this.trigger('complete', [this.element, this.getPoint(event), this.mouse.start, event]);
         },
 
 

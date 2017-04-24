@@ -1,11 +1,22 @@
 
 
+var DragTest = new Class({
+
+    drag: null,
+
+    initialize: function(element, options) {
+
+        this.drag = new Drag(element, )
+    },
+
+});
+
 $(document).ready(function() {
 
     var start = {};
 
     new Drag(
-        $('#box'),
+        $('#box1'),
         {
             snap: 50,
             onBeforeStart: function(element) {
@@ -13,31 +24,33 @@ $(document).ready(function() {
 
                 start.x = parseInt(element.css('left'));
                 start.y = parseInt(element.css('top'));
+                element.css('background-color', '#008700');
+                console.log('beforeStart');
             },
             onStart: function(element) {
                 'use strict';
 
-                element.css('background-color:', '#00FF00');
+                element.css('background-color', '#00FF00');
+                console.log('start');
             },
             onDrag: function(element, currentPoint, startPoint) {
                 'use strict';
 
                 var x = start.x - startPoint.x + currentPoint.x;
-                //var y = start.y - startPoint.y + currentPoint.y;
-
                 element.css('left', x);
-                //element.css('top', y);
             },
-            onCancel: function() {
+            onCancel: function(element) {
                 'use strict';
 
+                element.css('background-color', '#003f00');
                 console.log('cancel')
             },
-            onComplete: function() {
+            onComplete: function(element) {
                 'use strict';
 
+                element.css('background-color', '#003f00');
                 console.log('drag complete')
-            },
+            }
         }
     );
 });
