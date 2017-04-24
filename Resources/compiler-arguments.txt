@@ -1,0 +1,1 @@
+-jar $ProjectFileDir$\Resources\ClosureCompiler\compiler.jar --js JQuery.Class.js --js JQuery.Class.Extras.js --js JQuery.Class.Drag.js --js_output_file $ProjectFileDir$\JQuery.Class.min.js
