@@ -188,8 +188,10 @@
 
             if (event.originalEvent && event.originalEvent.touches) {
                 return {x: event.originalEvent.touches[0].pageX, y: event.originalEvent.touches[0].pageY}
-            } else {
+            } else if(event && event.pageX && event.pageY) {
                 return {x: event.pageX, y: event.pageY}
+            } else {
+                return {x: -1, y: -1};
             }
         }
 

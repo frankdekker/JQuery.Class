@@ -1,15 +1,15 @@
 
-
-var DragTest = new Class({
-
-    drag: null,
-
-    initialize: function(element, options) {
-
-        this.drag = new Drag(element, )
-    },
-
-});
+//
+// var DragTest = new Class({
+//
+//     drag: null,
+//
+//     initialize: function(element, options) {
+//
+//         this.drag = new Drag(element, )
+//     },
+//
+// });
 
 $(document).ready(function() {
 
