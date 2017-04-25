@@ -186,7 +186,7 @@
         getPoint: function (event) {
             'use strict';
 
-            if (event.originalEvent && event.originalEvent.touches) {
+            if (event.originalEvent && event.originalEvent.touches && event.originalEvent.touches.length > 0) {
                 return {x: event.originalEvent.touches[0].pageX, y: event.originalEvent.touches[0].pageY}
             } else if(event && event.pageX && event.pageY) {
                 return {x: event.pageX, y: event.pageY}
