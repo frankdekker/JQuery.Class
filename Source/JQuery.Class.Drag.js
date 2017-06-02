@@ -18,8 +18,8 @@
          */
         options: {
             snap: 10,
-            preventDefault: false,
-            stopPropagation: false
+            preventDefault: false,     // false, true, mouse, touch
+            stopPropagation: false     // false, true, mouse, touch
             // onBeforeStart: function(element, point, event) {},
             // onStart:       function(element, point, event) {},
             // onDrag:        function(element, point, start, event) {},
@@ -94,11 +94,20 @@
         start: function (event) {
             'use strict';
 
-            if (this.options.preventDefault) {
+            var isMouseEvent = event.type === 'mousedown',
+                isTouchEvent = event.type === 'touchstart';
+
+            if (this.options.preventDefault === true
+                || (isMouseEvent && this.options.preventDefault === 'mouse')
+                || (isTouchEvent && this.options.preventDefault === 'touch')
+            ) {
                 event.preventDefault();
             }
 
-            if (this.options.stopPropagation) {
+            if (this.options.stopPropagation === true
+                || (isMouseEvent && this.options.stopPropagation === 'mouse')
+                || (isTouchEvent && this.options.stopPropagation === 'touch')
+            ) {
                 event.stopPropagation();
             }
 

@@ -18,6 +18,8 @@ $(document).ready(function() {
     new Drag(
         $('#box1'),
         {
+            preventDefault: 'mouse',
+            stopPropagation: 'mouse',
             snap: 50,
             onBeforeStart: function(element) {
                 'use strict';
