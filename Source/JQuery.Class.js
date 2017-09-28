@@ -3,6 +3,14 @@
  */
 (function() {
 
+	// IE8 support for function.bind();
+	// @see https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+	if (!Function.prototype.bind) {
+		Function.prototype.bind = function() {
+            return $.proxy.apply($, [this].concat([].slice.call(arguments)));
+		};
+    }
+
 	this.Class = function(classDefinition)
 	{
 		classDefinition = classDefinition || {};
@@ -52,7 +60,7 @@
 	};
 
 	var extend = function(target, object) {
-		var key, value;
+		var key;
 
 		for (key in object) {
 

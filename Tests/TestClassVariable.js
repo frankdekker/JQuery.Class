@@ -73,10 +73,10 @@ QUnit.test("Variables", function(assert)
 
 	// test object class variable
 	tc2.addToObject('c');
-	assert.notEqual(Object.keys(tc1.testObject).length, Object.keys(tc2.testObject).length);
+	assert.notEqual(getObjectSize(tc1.testObject), getObjectSize(tc2.testObject));
 
 	tc2.addToInnerObject('d');
-	assert.notEqual(Object.keys(tc1.testObject.a).length, Object.keys(tc2.testObject.a).length);
+	assert.notEqual(getObjectSize(tc1.testObject.a), getObjectSize(tc2.testObject.a));
 
 	// test array class variable
 	tc2.addToArray('g');
@@ -87,5 +87,5 @@ QUnit.test("Variables", function(assert)
 
 	// test mixed class variable
 	tc2.addToMixed('c');
-	assert.notEqual(Object.keys(tc1.testMixed[0]).length, Object.keys(tc2.testMixed[0]).length);
+	assert.notEqual(getObjectSize(tc1.testMixed[0]), getObjectSize(tc2.testMixed[0]));
 });

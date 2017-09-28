@@ -46,5 +46,4 @@ QUnit.test("Events", function(assert)
 	test.off('testTwo', testTwoF);
 	test.trigger('testTwo', 'testTwo');
 	assert.equal(testTwo, 'testThree');
-
 });

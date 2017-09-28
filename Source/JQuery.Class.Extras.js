@@ -104,11 +104,11 @@
 			type = removeOn(type);
 			var events = this.$events[type];
 			if (events){
-				if (fn == undefined) {
+				if (fn === undefined) {
 					delete this.$events[type];
 				} else {
-					var index = events.indexOf(fn);
-					if (index != -1) delete events[index];
+					var index = $.inArray(fn, events);
+					if (index !== -1) delete events[index];
 				}
 			}
 			return this;
