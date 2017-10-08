@@ -148,7 +148,7 @@
 		 * @public
 		 */
 		setOptions: function() {
-			var options = this.options = $.extend.apply(null, $.merge([{}, this.options], arguments));
+			var options = this.options = $.extend.apply(null, $.merge([true, {}, this.options], arguments));
 			if (this.on) {
 				for (var option in options){
 					if ($.type(options[option]) != 'function' || !(/^on[A-Z]/).test(option)) {
