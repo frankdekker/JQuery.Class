@@ -75,23 +75,25 @@
 
 		$events: {},
 
-		/**
-		 * Add an event
-		 *
-		 * @param {String} type - the name of the event
-		 * @param {Function} fn - the function to call
-		 * @returns {*}
-		 * @public
-		 */
-		on: function(type, fn){
-			type = removeOn(type);
-			var events = this.$events[type] || [];
-			if ($.inArray(events, fn) < 0) {
-				events.push(fn);
-				this.$events[type] = events;
-			}
-			return this;
-		},
+        /**
+         * Add an event
+         *
+         * @param {String} types - the name of the events, separated by space
+         * @param {Function} fn - the function to call
+         * @returns {*}
+         * @public
+         */
+        on: function(types, fn){
+            types.split(' ').forEach(function(type) {
+                type = removeOn(type);
+                var events = this.$events[type] || [];
+                if ($.inArray(events, fn) < 0) {
+                    events.push(fn);
+                    this.$events[type] = events;
+                }
+            }.bind(this));
+            return this;
+        },
 
 		/**
 		 * Remove an event
